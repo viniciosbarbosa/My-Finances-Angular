@@ -1,0 +1,40 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.menu-item {
+  a {
+    color: #7b7b7b;
+    text-decoration: none;
+    margin: 10px;
+    transition: 0.3s;
+    &:hover {
+      color: #a7a7a7;
+      text-decoration: none;
+    }
+
+    &.active {
+      color: #070fb7;
+    }
+  }
+}
+
+button {
+  background: rgb(245, 135, 135);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  width: 50px;
+  height: 30px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  transition: 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    background: rgb(255, 12, 12);
+    transform: scale(1.05);
+  }
+}

@@ -1,0 +1,290 @@
+{
+  "uuid": "b321d60e-8ee9-41c0-ad38-308f664b6b1a",
+  "lastMigration": 32,
+  "name": "Myfinances db",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3000,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "786abfc5-cf26-4131-a308-f324b10e2118",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "authentication",
+      "responses": [
+        {
+          "uuid": "7976b67c-8795-4411-a706-1d86761a788a",
+          "body": "{\n  \"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyMywidXNlcm5hbWUiOiJ0ZXN0dXNlciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTYyMTIwMzIwMCwiZXhwIjoxNjIxMjA2ODAwfQ.6-IuEjG1OPH-5DdTn9uLZH4hA2ggQXrwI7GrPQf0rPQ\",\n  \n  \"user\":{\n    \"nome\":\"vinicios\",\n    \"email\":\"vinicios@teste.com\",\n    \"password\":\"A1b@3dEf\"\n    \"id\":1,\n    \"role\":\"USER\"\n  }\n}a",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "email",
+              "value": "vinicios@teste.com",
+              "invert": false,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "password",
+              "value": "A1b@3dEf",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "c433c61c-17dc-49a2-bf23-b7a233814d8a",
+          "body": "{\n  \"message\":\"Email ou senha incorreta\"\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "email",
+              "value": "vinicios@teste.com",
+              "invert": true,
+              "operator": "equals"
+            },
+            {
+              "target": "body",
+              "modifier": "password",
+              "value": "A1b@3dEf",
+              "invert": true,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "dec2c106-713e-466a-9f92-e4a61600ac03",
+      "type": "crud",
+      "documentation": "",
+      "method": "",
+      "endpoint": "entradas",
+      "responses": [
+        {
+          "uuid": "942c0553-22cc-4fb4-8fcb-b38ab9e7f3df",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "DATABUCKET",
+          "filePath": "",
+          "databucketID": "ks3d",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "b0591f95-57d3-43c4-b493-16eab0540d8f",
+      "type": "crud",
+      "documentation": "",
+      "method": "",
+      "endpoint": "categorias",
+      "responses": [
+        {
+          "uuid": "140776a0-a4f1-4302-8f14-069354c64670",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "DATABUCKET",
+          "filePath": "",
+          "databucketID": "nrtb",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "4c3b127c-df93-4b0d-9a24-88e83de0c968",
+      "type": "crud",
+      "documentation": "",
+      "method": "",
+      "endpoint": "meses",
+      "responses": [
+        {
+          "uuid": "d13c2ea6-81fd-4761-8412-b61399a59979",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "DATABUCKET",
+          "filePath": "",
+          "databucketID": "aens",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    },
+    {
+      "uuid": "613efa49-1df3-4379-bee7-c0adca680bd2",
+      "type": "crud",
+      "documentation": "",
+      "method": "",
+      "endpoint": "anos",
+      "responses": [
+        {
+          "uuid": "f5761e91-fec7-423c-b9b8-e63a59d0203e",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "DATABUCKET",
+          "filePath": "",
+          "databucketID": "algv",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "786abfc5-cf26-4131-a308-f324b10e2118"
+    },
+    {
+      "type": "route",
+      "uuid": "dec2c106-713e-466a-9f92-e4a61600ac03"
+    },
+    {
+      "type": "route",
+      "uuid": "b0591f95-57d3-43c4-b493-16eab0540d8f"
+    },
+    {
+      "type": "route",
+      "uuid": "4c3b127c-df93-4b0d-9a24-88e83de0c968"
+    },
+    {
+      "type": "route",
+      "uuid": "613efa49-1df3-4379-bee7-c0adca680bd2"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "63af77ce-23ce-4b7e-a33a-e556b1b0769a",
+      "id": "nrtb",
+      "name": "Categorias",
+      "documentation": "",
+      "value": "[\n    {\n      \"nome\": \"Moradia\",\n      \"descricao\": \"Pagamentos de Contas da Casa e Apto\",\n      \"id\": \"1\"\n    },\n    {\n      \"id\": \"2\",\n      \"nome\": \"Saúde\",\n      \"descricao\": \"Plano de Saúde e Remédios\"\n    },\n    {\n      \"id\": \"3\",\n      \"nome\": \"Lazer\",\n      \"descricao\": \"Cinema, parques, praia, etc\"\n    },\n    {\n      \"id\": \"4\",\n      \"nome\": \"Salário\",\n      \"descricao\": \"Recebimento de Salário\"\n    },\n    {\n      \"nome\": \"Outros\",\n      \"descricao\": \"Outras despesasa\",\n      \"id\": \"6\"\n    },\n    {\n      \"nome\": \"Limpeza\",\n      \"descricao\": \"domestica\",\n      \"id\": \"9c6e\"\n    },\n    {\n      \"nome\": \"Pre commit\",\n      \"descricao\": \"teste edit\",\n      \"id\": \"0dff\"\n    }\n  ]"
+    },
+    {
+      "uuid": "d9f01d2d-ed0c-4935-bd6f-6eda3a48caf3",
+      "id": "ks3d",
+      "name": "Entradas",
+      "documentation": "",
+      "value": "[\n    {\n      \"id\": \"6\",\n      \"nome\": \"Video Game\",\n      \"categoriaId\": 3,\n      \"pago\": false,\n      \"data\": \"17/03/2023\",\n      \"valor\": \"15,00\",\n      \"tipo\": \"despesa\"\n    },\n    {\n      \"id\": \"11\",\n      \"nome\": \"Uber\",\n      \"categoriaId\": 2,\n      \"pago\": true,\n      \"data\": \"17/03/2023\",\n      \"valor\": \"30,00\",\n      \"tipo\": \"despesa\"\n    },\n    {\n      \"id\": \"12\",\n      \"nome\": \"Aluguel\",\n      \"categoriaId\": 3,\n      \"pago\": false,\n      \"data\": \"23/03/2023\",\n      \"valor\": \"15,00\",\n      \"tipo\": \"despesa\"\n    },\n    {\n      \"id\": \"13\",\n      \"nome\": \"Gás de Cozinha\",\n      \"categoriaId\": 2,\n      \"pago\": false,\n      \"data\": \"25/03/2023\",\n      \"valor\": \"30,00\",\n      \"tipo\": \"despesa\"\n    },\n    {\n      \"id\": \"14\",\n      \"nome\": \"Pagamento Pelo Projeto XYZ\",\n      \"categoriaId\": 5,\n      \"pago\": true,\n      \"data\": \"25/03/2023\",\n      \"valor\": \"2980,00\",\n      \"tipo\": \"receita\"\n    },\n    {\n      \"id\": \"19\",\n      \"nome\": \"Netflix\",\n      \"categoriaId\": 3,\n      \"pago\": false,\n      \"data\": \"07/04/2023\",\n      \"valor\": \"15,00\",\n      \"tipo\": \"despesa\"\n    },\n    {\n      \"id\": \"21\",\n      \"nome\": \"Video Game\",\n      \"categoriaId\": 2,\n      \"pago\": true,\n      \"data\": \"17/04/2023\",\n      \"valor\": \"30,00\",\n      \"tipo\": \"despesa\"\n    },\n    {\n      \"id\": \"22\",\n      \"nome\": \"Cinema\",\n      \"categoriaId\": 3,\n      \"pago\": true,\n      \"data\": \"18/04/2023\",\n      \"valor\": \"15,00\",\n      \"tipo\": \"despesa\"\n    },\n    {\n      \"id\": \"23\",\n      \"nome\": \"Gasolina\",\n      \"categoriaId\": 2,\n      \"pago\": false,\n      \"data\": \"21/04/2023\",\n      \"valor\": \"130,00\",\n      \"tipo\": \"despesa\"\n    },\n    {\n      \"id\": \"44\",\n      \"nome\": \"Uber\",\n      \"categoriaId\": 3,\n      \"pago\": true,\n      \"data\": \"28/04/2023\",\n      \"valor\": \"15,00\",\n      \"tipo\": \"despesa\"\n    },\n    {\n      \"id\": \"2eb9\",\n      \"nome\": \"teste\",\n      \"categoriaId\": \"2\",\n      \"pago\": true,\n      \"data\": \"19/05/2024\",\n      \"tipo\": \"despesa\",\n      \"valor\": 100\n    },\n    {\n      \"id\": \"8f1a\",\n      \"nome\": \"teste\",\n      \"categoriaId\": \"1\",\n      \"pago\": true,\n      \"data\": \"19/05/2024\",\n      \"tipo\": \"despesa\",\n      \"valor\": 100\n    }\n  ],"
+    },
+    {
+      "uuid": "6788f19b-8bad-4b7e-bd97-193301a2fed2",
+      "id": "aens",
+      "name": "Meses",
+      "documentation": "",
+      "value": "[\n    {\n      \"id\": \"1\",\n      \"value\": \"Janeiro\"\n    },\n    {\n      \"id\": \"2\",\n      \"value\": \"Fevereiro\"\n    },\n    {\n      \"id\": \"3\",\n      \"value\": \"Março\"\n    },\n    {\n      \"id\": \"4\",\n      \"value\": \"Abril\"\n    },\n    {\n      \"id\": \"5\",\n      \"value\": \"Maio\"\n    },\n    {\n      \"id\": \"6\",\n      \"value\": \"Junho\"\n    },\n    {\n      \"id\": \"7\",\n      \"value\": \"Julho\"\n    },\n    {\n      \"id\": \"8\",\n      \"value\": \"Agosto\"\n    },\n    {\n      \"id\": \"9\",\n      \"value\": \"Setembro\"\n    },\n    {\n      \"id\": \"10\",\n      \"value\": \"Outubro\"\n    },\n    {\n      \"id\": \"11\",\n      \"value\": \"Novembro\"\n    },\n    {\n      \"id\": \"12\",\n      \"value\": \"Dezembro\"\n    }\n  ]"
+    },
+    {
+      "uuid": "5eaa6b29-547a-4e22-a986-3f318a715697",
+      "id": "algv",
+      "name": "Anos",
+      "documentation": "",
+      "value": "[\n    { \"value\": 2024 },\n    { \"value\": 2023 },\n    { \"value\": 2022 },\n    { \"value\": 2021 },\n    { \"value\": 2020 },\n    { \"value\": 2019 },\n    { \"value\": 2018 },\n    { \"value\": 2017 },\n    { \"value\": 2016 },\n    { \"value\": 2015 },\n    { \"value\": 2014 },\n    { \"value\": 2013 },\n    { \"value\": 2012 },\n    { \"value\": 2011 },\n    { \"value\": 2010 },\n    { \"value\": 2009 },\n    { \"value\": 2008 },\n    { \"value\": 2007 },\n    { \"value\": 2006 },\n    { \"value\": 2005 },\n    { \"value\": 2004 },\n    { \"value\": 2003 },\n    { \"value\": 2002 },\n    { \"value\": 2001 },\n    { \"value\": 2000 }\n  ]"
+    }
+  ],
+  "callbacks": []
+}
