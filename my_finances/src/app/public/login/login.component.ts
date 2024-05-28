@@ -1,8 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ToolbarComponent } from './../../shared/components/toolbar/toolbar.component';
+import { AuthService } from './../../auth/services/auth.service';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Login } from '../model/login.model';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +21,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
   formLogin!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  @ViewChild(ToolbarComponent) toolbarComponent!: ToolbarComponent;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.formInit();
@@ -35,6 +49,23 @@ export class LoginComponent implements OnInit, OnDestroy {
       email: this.formLogin.value.email,
       password: this.formLogin.value.password,
     };
+
+    params.email = params.email.toLocaleLowerCase();
+
+    this.authService
+      .login(params)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          if (response.user?.id) {
+            this.authService.setLoggedIn(true);
+            this.router.navigate(['/extract']);
+          }
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
   }
 
   ngOnDestroy(): void {

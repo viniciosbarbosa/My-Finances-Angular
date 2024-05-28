@@ -12,8 +12,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
+
 @NgModule({
-  declarations: [],
+  declarations: [ToolbarComponent],
   imports: [
     CommonModule,
     MatCardModule,
@@ -44,6 +46,7 @@ import { MatInputModule } from '@angular/material/input';
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
+    ToolbarComponent,
   ],
 })
 export class SharedModule {}

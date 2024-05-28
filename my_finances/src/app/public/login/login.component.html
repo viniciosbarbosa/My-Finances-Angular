@@ -1,7 +1,7 @@
 <div class="container">
   <h1>Entrar Minhas Finanças</h1>
 
-  <form class="example-form" [formGroup]="formLogin">
+  <form class="example-form" [formGroup]="formLogin" (ngSubmit)="login()">
     <mat-form-field
       appearance="outline"
       color="primary"
@@ -20,6 +20,13 @@
       <input matInput type="password" formControlName="password" />
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit">Entrar</button>
+    <button
+      [disabled]="formLogin.invalid"
+      mat-raised-button
+      color="primary"
+      type="submit"
+    >
+      Entrar
+    </button>
   </form>
 </div>
