@@ -1,5 +1,12 @@
+import { ToolbarComponent } from './../../shared/components/toolbar/toolbar.component';
 import { AuthService } from './../../auth/services/auth.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Login } from '../model/login.model';
@@ -13,6 +20,8 @@ import { Subject, takeUntil } from 'rxjs';
 export class LoginComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
   formLogin!: FormGroup;
+
+  @ViewChild(ToolbarComponent) toolbarComponent!: ToolbarComponent;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,9 +57,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
-          console.log(response);
-
           if (response.user?.id) {
+            this.authService.setLoggedIn(true);
             this.router.navigate(['/extract']);
           }
         },

@@ -1,7 +1,8 @@
 import { Router } from '@angular/router';
 import { AuthService } from './../../../auth/services/auth.service';
-import { Component, OnInit } from '@angular/core';
-import { take } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { BehaviorSubject, Observer, take } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,27 +10,31 @@ import { take } from 'rxjs';
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
-  userLoggedIn: boolean = false;
-
   constructor(private authService: AuthService, private router: Router) {}
+  private authStateSubscription!: Subscription;
+
+  loginState: boolean = false;
 
   ngOnInit(): void {
+    this.showMenu();
     this.isLogged();
   }
 
+  showMenu() {
+    this.authStateSubscription = this.authService.isLoggedIn$.subscribe(
+      (loggedIn: boolean) => {
+        this.loginState = loggedIn;
+      }
+    );
+  }
+
   isLogged(): void {
-    this.authService
-      .isLogged()
-      .pipe(take(1))
-      .subscribe({
-        next(response) {
-          console.log(response, typeof response);
-        },
-      });
+    this.loginState = this.authService.isLogged();
   }
 
   logout(): void {
     this.authService.logout();
+    this.loginState = false;
     this.router.navigateByUrl('/login');
   }
 }

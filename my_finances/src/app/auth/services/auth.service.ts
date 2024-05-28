@@ -1,5 +1,5 @@
 import { Injectable, Injector, inject } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map, of } from 'rxjs';
 import { Login } from 'src/app/public/model/login.model';
 import { HttpBaseService } from 'src/app/shared/service/http-base.service';
 
@@ -13,6 +13,10 @@ export class AuthService extends HttpBaseService {
 
   private endpoint = 'authentication';
 
+  private loggedIn = new BehaviorSubject<boolean>(false);
+
+  isLoggedIn$ = this.loggedIn.asObservable();
+
   constructor(protected readonly inject: Injector) {
     super(inject);
   }
@@ -20,8 +24,8 @@ export class AuthService extends HttpBaseService {
   login(params: Login): Observable<any> {
     return this.httpPost(this.endpoint, params).pipe(
       map((response) => {
-        sessionStorage.setItem('Token', response.token);
-        sessionStorage.setItem('User', JSON.stringify(response.user));
+        localStorage.setItem('Token', response.token);
+        localStorage.setItem('User', JSON.stringify(response.user));
         this.subjectUsuario.next(response.user);
         this.subjectLogin.next(true);
 
@@ -30,27 +34,37 @@ export class AuthService extends HttpBaseService {
     );
   }
   logout() {
-    sessionStorage.removeItem('Token');
-    sessionStorage.removeItem('User');
+    localStorage.removeItem('Token');
+    localStorage.removeItem('User');
     this.subjectUsuario.next(null);
     this.subjectLogin.next(false);
   }
 
-  isLogged(): Observable<boolean> {
-    const token = sessionStorage.getItem('Token');
+  isLogged(): boolean {
+    const token = localStorage.getItem('Token');
     if (token) {
-      this.subjectLogin.next(true);
+      return true;
+    } else {
+      return false;
     }
+  }
 
-    return this.subjectLogin.asObservable();
+  setLoggedIn(state: boolean): void {
+    this.loggedIn.next(state);
   }
 
   getUserDatas(): Observable<any> {
-    const userDatas = sessionStorage.getItem('User');
-    if (userDatas) {
-      this.subjectUsuario.next(JSON.parse(userDatas));
-    }
+    if (this.subjectUsuario.value) {
+      return of(this.subjectUsuario.value);
+    } else {
+      const userDatas = localStorage.getItem('User');
+      if (userDatas) {
+        this.subjectUsuario.next(JSON.parse(userDatas));
 
-    return this.subjectUsuario;
+        return of(JSON.parse(userDatas));
+      }
+
+      return of(null);
+    }
   }
 }
