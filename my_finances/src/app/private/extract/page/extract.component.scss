@@ -16,9 +16,25 @@
 }
 
 .header {
-  height: 300px;
+  display: flex;
+  justify-content: center;
 }
 
+.datas-info-content {
+  display: flex;
+  justify-content: center;
+
+  @media screen and (max-width: 500px) {
+    display: block;
+  }
+}
+
+.btnClass {
+  width: 10rem;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
 .title {
   position: relative;
   font-size: 3rem;
@@ -44,12 +60,21 @@
   width: 14rem;
   margin: 10px;
   margin-top: 5rem;
+
+  @media screen and (max-width: 500px) {
+    width: 80%;
+    margin-top: 0px;
+    margin-left: 2.5rem;
+
+    &:first-child {
+      margin-top: 2rem;
+    }
+  }
 }
 
 .card-item {
   margin-top: 50px;
   position: relative;
-  top: -130px;
 
   @media screen and (max-width: 500px) {
     margin-top: 0px;
