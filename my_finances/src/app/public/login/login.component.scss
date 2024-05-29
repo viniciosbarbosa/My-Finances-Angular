@@ -12,6 +12,9 @@
   max-width: 500px;
   margin: 0 auto;
   margin-top: 3rem;
+  @media screen and (max-width: 500px) {
+    max-width: 85%;
+  }
 }
 
 .flex {

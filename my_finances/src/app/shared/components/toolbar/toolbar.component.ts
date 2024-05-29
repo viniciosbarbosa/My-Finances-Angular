@@ -26,13 +26,13 @@ export class ToolbarComponent implements OnInit {
   ngOnInit(): void {
     this.showMenu();
     this.isLogged();
-    this.menuByUserRole();
   }
 
   showMenu() {
     this.authStateSubscription = this.authService.isLoggedIn$.subscribe(
       (loggedIn: boolean) => {
         this.loginState = loggedIn;
+        this.menuByUserRole();
       }
     );
   }
