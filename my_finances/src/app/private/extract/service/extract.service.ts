@@ -1,9 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injector, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpBaseService } from 'src/app/shared/service/http-base.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ExtractService {
+export class ExtractService extends HttpBaseService {
+  constructor(protected readonly inject: Injector) {
+    super(inject);
+  }
 
-  constructor() { }
+  private endpoint = 'entradas';
+
+  getAllExtract(): Observable<any> {
+    return this.httpGet(this.endpoint);
+  }
 }

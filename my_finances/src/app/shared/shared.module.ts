@@ -16,9 +16,10 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { RouterModule } from '@angular/router';
+import { FormatBrazilianCurrencyPipe } from './pipe/format-brazilian-currency.pipe';
 
 @NgModule({
-  declarations: [ToolbarComponent],
+  declarations: [ToolbarComponent, FormatBrazilianCurrencyPipe],
   imports: [
     CommonModule,
     MatCardModule,
@@ -52,6 +53,7 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     MatSnackBarModule,
     ToolbarComponent,
+    FormatBrazilianCurrencyPipe,
   ],
 })
 export class SharedModule {}

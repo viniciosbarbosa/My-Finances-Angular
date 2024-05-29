@@ -3,8 +3,12 @@
     <div class="flex-item">
       <mat-card class="receita">
         <mat-card-header class="center">
-          <mat-card-title class="titulo"> R$ 1000.00 </mat-card-title>
+          <mat-card-title class="titulo">Receitas</mat-card-title>
         </mat-card-header>
+
+        <mat-card-content class="center conteudo">
+          {{ infoExtract.incomes | formatBrazilianCurrency }}
+        </mat-card-content>
       </mat-card>
     </div>
   </div>
@@ -13,8 +17,12 @@
     <div class="flex-item">
       <mat-card class="despesa">
         <mat-card-header class="center">
-          <mat-card-title class="titulo"> R$ 1000.00 </mat-card-title>
+          <mat-card-title class="titulo">Despesas</mat-card-title>
         </mat-card-header>
+
+        <mat-card-content class="center conteudo">
+          {{ infoExtract.debts | formatBrazilianCurrency }}
+        </mat-card-content>
       </mat-card>
     </div>
   </div>
@@ -23,8 +31,12 @@
     <div class="flex-item">
       <mat-card class="saldo">
         <mat-card-header class="center">
-          <mat-card-title class="titulo"> R$ 1000.00 </mat-card-title>
+          <mat-card-title class="titulo">Saldo</mat-card-title>
         </mat-card-header>
+
+        <mat-card-content class="center conteudo">
+          {{ infoExtract.balance | formatBrazilianCurrency }}
+        </mat-card-content>
       </mat-card>
     </div>
   </div>
