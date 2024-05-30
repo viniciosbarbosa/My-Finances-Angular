@@ -58,15 +58,15 @@ export class ExtractComponent implements OnInit, OnDestroy {
     });
   }
 
-  async getDatesYear() {
-    await this.extractService
+  getDatesYear() {
+    this.extractService
       .getAllMouths()
       .pipe(takeUntil(this.destroy$))
       .subscribe((response) => {
         this.months = response;
       });
 
-    await this.extractService
+    this.extractService
       .getAllYears()
       .pipe(takeUntil(this.destroy$))
       .subscribe((response) => {
