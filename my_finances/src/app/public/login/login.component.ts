@@ -18,7 +18,7 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  private readonly destroy$: Subject<void> = new Subject();
+  public readonly destroy$: Subject<void> = new Subject();
   formLogin!: FormGroup;
 
   @ViewChild(ToolbarComponent) toolbarComponent!: ToolbarComponent;
@@ -62,8 +62,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.router.navigate(['/extract']);
           }
         },
-        error: (error) => {
-          console.log(error);
+        error: () => {
+          console.log('Login failed:');
         },
       });
   }

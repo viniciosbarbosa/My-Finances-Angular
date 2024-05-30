@@ -13,6 +13,14 @@ export class ToolbarComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
   private authStateSubscription!: Subscription;
 
+  menu: Array<any> = [
+    { descricao: 'Extract', rota: 'extract', role: 'USER' },
+    { descricao: 'Movements', rota: 'movements', role: 'USER' },
+    { descricao: 'Categories', rota: 'categories', role: 'ADMIN' },
+  ];
+
+  menuFilter: Array<any> = [];
+
   loginState: boolean = false;
 
   ngOnInit(): void {
@@ -24,6 +32,7 @@ export class ToolbarComponent implements OnInit {
     this.authStateSubscription = this.authService.isLoggedIn$.subscribe(
       (loggedIn: boolean) => {
         this.loginState = loggedIn;
+        this.menuByUserRole();
       }
     );
   }
@@ -36,5 +45,18 @@ export class ToolbarComponent implements OnInit {
     this.authService.logout();
     this.loginState = false;
     this.router.navigateByUrl('/login');
+  }
+
+  menuByUserRole(): void {
+    this.authService
+      .getUserDatas()
+      .pipe(take(1))
+      .subscribe((user) => {
+        if (user) {
+          this.menuFilter = this.menu.filter((item) => item.role === user.role);
+        } else {
+          console.log('erro');
+        }
+      });
   }
 }

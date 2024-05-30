@@ -1,3 +1,90 @@
-<div class="container">
-  <h1>Extrato</h1>
+<div class="extract">
+  <div class="header">
+    <form [formGroup]="formExtract" (ngSubmit)="getInfoByMouthYear()">
+      <div class="items-mobile">
+        <mat-form-field appearance="outline" class="input-item" color="primary">
+          <mat-label>Mês</mat-label>
+          <mat-select formControlName="month">
+            <mat-option *ngFor="let month of months" [value]="month.id">
+              {{ month.value }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="input-item" color="primary">
+          <mat-label>Ano</mat-label>
+          <mat-select formControlName="year">
+            <mat-option>Selecione o ano</mat-option>
+            <mat-option *ngFor="let year of years" [value]="year.value">
+              {{ year.value }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <button
+        class="btnClass"
+        color="primary"
+        mat-raised-button
+        type="submit"
+        [disabled]="this.formExtract.invalid"
+      >
+        Enviar
+      </button>
+
+      <button
+        class="btnClass"
+        *ngIf="btnGeralExtract"
+        color="warn"
+        mat-raised-button
+        (click)="clearFilterDatas()"
+      >
+        Remover Filtro
+      </button>
+    </form>
+  </div>
+
+  <div class="datas-info-content">
+    <div class="flex card-item">
+      <div class="flex-item">
+        <mat-card class="receita">
+          <mat-card-header class="center">
+            <mat-card-title class="titulo">Receitas</mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content class="center conteudo">
+            {{ infoExtract.incomes | formatBrazilianCurrency }}
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <div class="flex card-item">
+      <div class="flex-item">
+        <mat-card class="despesa">
+          <mat-card-header class="center">
+            <mat-card-title class="titulo">Despesas</mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content class="center conteudo">
+            {{ infoExtract.debts | formatBrazilianCurrency }}
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <div class="flex card-item">
+      <div class="flex-item">
+        <mat-card class="saldo">
+          <mat-card-header class="center">
+            <mat-card-title class="titulo">Saldo</mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content class="center conteudo">
+            {{ infoExtract.balance | formatBrazilianCurrency }}
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
 </div>

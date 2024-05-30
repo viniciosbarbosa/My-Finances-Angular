@@ -2,7 +2,11 @@
   <span>My Finances</span>
   <span class="example-spacer"></span>
 
-  <div class="menu-item"></div>
+  <div class="menu-item" *ngFor="let item of menuFilter">
+    <a routerLinkActive="router-link-active" [routerLink]="item.rota">{{
+      item.descricao
+    }}</a>
+  </div>
 
   <div>
     <button (click)="logout()">Sair</button>

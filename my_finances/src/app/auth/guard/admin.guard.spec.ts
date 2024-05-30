@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { Router, RouterStateSnapshot } from '@angular/router';
-import { UserGuard } from './user.guard';
+import { AdminGuard } from './admin.guard';
 import { AuthService } from '../services/auth.service';
 import { of } from 'rxjs';
 
-describe('UserGuard', () => {
-  let guard: UserGuard;
+describe('AdminGuard', () => {
+  let guard: AdminGuard;
   let authService: jasmine.SpyObj<AuthService>;
   let router: jasmine.SpyObj<Router>;
   const mockSnapshot: RouterStateSnapshot =
@@ -17,19 +17,19 @@ describe('UserGuard', () => {
     const authServiceSpy = jasmine.createSpyObj('AuthService', [
       'getUserDatas',
     ]);
-    authServiceSpy.getUserDatas.and.returnValue(of({ role: 'USER' }));
+    authServiceSpy.getUserDatas.and.returnValue(of({ role: 'ADMIN' }));
 
     const routerSpy = jasmine.createSpyObj('Router', ['navigateByUrl']);
 
     TestBed.configureTestingModule({
       providers: [
-        UserGuard,
+        AdminGuard,
         { provide: AuthService, useValue: authServiceSpy },
         { provide: Router, useValue: routerSpy },
       ],
     });
 
-    guard = TestBed.inject(UserGuard);
+    guard = TestBed.inject(AdminGuard);
     authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
     router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
   });
@@ -38,7 +38,7 @@ describe('UserGuard', () => {
     expect(guard).toBeTruthy();
   });
 
-  it('should allow activation for a USER role', (done) => {
+  it('should allow activation for an ADMIN role', (done) => {
     guard.canActivate(null!, mockSnapshot).subscribe((result) => {
       expect(result).toBeTrue();
       done();
@@ -48,8 +48,8 @@ describe('UserGuard', () => {
     expect(router.navigateByUrl).not.toHaveBeenCalled();
   });
 
-  it('should redirect to login for a non-USER role', (done) => {
-    authService.getUserDatas.and.returnValue(of({ role: 'ADMIN' }));
+  it('should redirect to login for a non-ADMIN role', (done) => {
+    authService.getUserDatas.and.returnValue(of({ role: 'USER' }));
 
     guard.canActivate(null!, mockSnapshot).subscribe((result) => {
       expect(result).toBeFalse();
