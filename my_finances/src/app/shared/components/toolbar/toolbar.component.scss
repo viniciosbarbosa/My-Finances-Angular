@@ -1,6 +1,25 @@
 .example-spacer {
   flex: 1 1 auto;
 }
+.menu-content {
+  display: contents;
+
+  .title {
+    display: block;
+    margin-left: 3rem;
+  }
+
+  .btn-exit {
+    margin-right: 2rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    .title,
+    .btn-exit {
+      margin: 0;
+    }
+  }
+}
 
 .menu-item {
   a {
@@ -20,7 +39,7 @@
 }
 
 button {
-  background: rgb(245, 135, 135);
+  background: rgb(255, 15, 15);
   display: flex;
   justify-content: center;
   align-items: center;

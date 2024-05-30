@@ -1,6 +1,7 @@
 import { CategoriesService } from './../service/categories.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Categories } from '../model/Categories';
 
 @Component({
   selector: 'app-categories',
@@ -12,6 +13,12 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   constructor(private categoriesService: CategoriesService) {}
 
+  tableCategoriesData!: Array<Categories>;
+  total = 1;
+  loading = true;
+  pageSize = 5;
+  pageIndex = 1;
+
   ngOnInit(): void {
     this.getAllCategories();
   }
@@ -21,9 +28,13 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   getAllCategories(): void {
     this.categoriesService.getCategories().subscribe({
       next: (response) => {
-        console.log(response);
+        this.loading = false;
+        this.tableCategoriesData = response;
+        console.log(this.tableCategoriesData);
       },
       error: (error) => {
+        this.loading = false;
+
         console.log(error);
       },
     });
