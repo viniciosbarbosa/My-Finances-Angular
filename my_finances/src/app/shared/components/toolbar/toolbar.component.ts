@@ -52,7 +52,11 @@ export class ToolbarComponent implements OnInit {
       .getUserDatas()
       .pipe(take(1))
       .subscribe((user) => {
-        this.menuFilter = this.menu.filter((item) => item.role === user.role);
+        if (user) {
+          this.menuFilter = this.menu.filter((item) => item.role === user.role);
+        } else {
+          console.log('erro');
+        }
       });
   }
 }
