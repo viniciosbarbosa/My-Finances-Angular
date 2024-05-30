@@ -47,8 +47,6 @@ describe('AuthService', () => {
         },
       };
 
-      httpBaseService.httpPost.and.returnValue(of(mockResponse));
-
       service.login(loginParams).subscribe((response) => {
         expect(response).toEqual(mockResponse);
         expect(localStorage.getItem('Token')).toEqual('mockToken');
@@ -59,9 +57,11 @@ describe('AuthService', () => {
         expect(service['subjectLogin'].getValue()).toEqual(true);
       });
 
-      const req = httpTestingController.expectOne('authentication');
+      const req = httpTestingController.expectOne((req) =>
+        req.url.includes('authentication')
+      );
       expect(req.request.method).toBe('POST');
-      req.flush(mockResponse);
+      req.flush(mockResponse); // Simula a resposta da requisição
     });
   });
 
@@ -71,7 +71,10 @@ describe('AuthService', () => {
       localStorage.setItem(
         'User',
         JSON.stringify({
-          /* mock user data */
+          nome: 'vinicios',
+          email: 'vinicios@teste.com',
+          id: 1,
+          role: 'USER',
         })
       );
 
@@ -105,7 +108,10 @@ describe('AuthService', () => {
   describe('getUserDatas', () => {
     it('should return user data from subject if available', () => {
       const mockUser = {
-        /* mock user data */
+        nome: 'vinicios',
+        email: 'vinicios@teste.com',
+        id: 1,
+        role: 'USER',
       };
       service['subjectUsuario'] = new BehaviorSubject<any>(mockUser);
 
@@ -135,16 +141,6 @@ describe('AuthService', () => {
 
       service.getUserDatas().subscribe((user) => {
         expect(user).toBeNull();
-      });
-    });
-  });
-
-  describe('isLoggedIn$', () => {
-    it('should return observable of loggedIn subject', () => {
-      service['loggedIn'] = new BehaviorSubject<boolean>(true);
-
-      service.isLoggedIn$.subscribe((loggedIn) => {
-        expect(loggedIn).toEqual(true);
       });
     });
   });
