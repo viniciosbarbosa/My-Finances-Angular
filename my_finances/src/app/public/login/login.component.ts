@@ -57,7 +57,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
-          if (response.user?.id) {
+          if (response.user?.role == 'ADMIN') {
+            this.authService.setLoggedIn(true);
+            this.router.navigate(['/categories']);
+          } else {
             this.authService.setLoggedIn(true);
             this.router.navigate(['/extract']);
           }
