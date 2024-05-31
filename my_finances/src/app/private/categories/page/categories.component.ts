@@ -4,6 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { Categories } from '../model/Categories';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalCreateEditComponent } from '../components/modal-create-edit/modal-create-edit.component';
+import { NzMessageService } from 'ng-zorro-antd/message';
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
@@ -14,7 +15,8 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   constructor(
     private categoriesService: CategoriesService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private messageNz: NzMessageService
   ) {}
 
   tableCategoriesData!: Array<Categories>;
@@ -78,6 +80,9 @@ export class CategoriesComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           this.getAllCategories();
+          this.messageNz.success(`Category has been deleted`, {
+            nzDuration: 1000,
+          });
         },
         error: (error) => {
           console.log(error);

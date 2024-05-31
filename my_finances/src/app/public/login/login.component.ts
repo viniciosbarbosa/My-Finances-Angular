@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Login } from '../model/login.model';
 import { Subject, takeUntil } from 'rxjs';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private message: NzMessageService
   ) {}
 
   ngOnInit(): void {
@@ -64,6 +66,10 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.authService.setLoggedIn(true);
             this.router.navigate(['/extract']);
           }
+
+          this.message.success(`Welcome ${response.user.nome}`, {
+            nzDuration: 1000,
+          });
         },
         error: () => {
           console.log('Login failed:');

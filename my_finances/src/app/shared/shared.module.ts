@@ -12,6 +12,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
@@ -20,7 +21,6 @@ import { FormatBrazilianCurrencyPipe } from './pipe/format-brazilian-currency.pi
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [ToolbarComponent, FormatBrazilianCurrencyPipe],
@@ -44,6 +44,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     NzButtonModule,
     NzTableModule,
     NzIconModule,
+
     MatDialogModule,
   ],
   exports: [
@@ -65,6 +66,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     NzButtonModule,
     NzTableModule,
     NzIconModule,
+
     MatDialogModule,
   ],
 })

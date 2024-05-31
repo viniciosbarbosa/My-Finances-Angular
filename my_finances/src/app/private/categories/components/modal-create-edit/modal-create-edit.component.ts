@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
 import { Categories } from '../../model/Categories';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-modal-create-edit',
@@ -22,7 +23,8 @@ export class ModalCreateEditComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private categoriesService: CategoriesService,
     public matDialogRef: MatDialogRef<ModalCreateEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: string
+    @Inject(MAT_DIALOG_DATA) public data: string,
+    private message: NzMessageService
   ) {}
 
   ngOnInit(): void {
@@ -107,6 +109,9 @@ export class ModalCreateEditComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (response) => {
             this.closeDialog(response);
+            this.message.success(`Category has been updated`, {
+              nzDuration: 1000,
+            });
           },
           error: (error) => {
             console.log(error);
@@ -124,6 +129,9 @@ export class ModalCreateEditComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (response) => {
             this.closeDialog(response);
+            this.message.success(`Category has been created`, {
+              nzDuration: 1000,
+            });
           },
           error: (error) => {
             console.log(error);
