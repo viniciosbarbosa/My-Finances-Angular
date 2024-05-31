@@ -3,7 +3,7 @@
     <span nz-icon nzType="close" nzTheme="outline"></span>
   </button>
 
-  <form [formGroup]="categoryForm" class="form-content">
+  <form [formGroup]="categoryForm" (ngSubmit)="saveInfo()" class="form-content">
     <h1>{{ title }} category</h1>
 
     <mat-form-field appearance="outline" class="mat-form-content">
@@ -27,7 +27,7 @@
     </mat-form-field>
 
     <button
-      (click)="saveInfo()"
+      type="submit"
       mat-raised-button
       color="primary"
       [disabled]="categoryForm.invalid || !changeReported"

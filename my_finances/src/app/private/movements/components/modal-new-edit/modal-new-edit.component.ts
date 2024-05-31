@@ -105,6 +105,62 @@ export class ModalNewEditComponent implements OnInit, OnDestroy {
     this.matDialogRef.close(data);
   }
 
+  saveInfo(): void {
+    if (
+      this.infoData.movementData !== null &&
+      this.infoData.movementData !== undefined
+    ) {
+      const params = {
+        nome: this.movimentForm.value.nome,
+        categoriaId: this.movimentForm.value.categoriaId,
+        pago: this.movimentForm.value.pago,
+        data: this.movimentForm.value.data,
+        valor: this.movimentForm.value.valor,
+        tipo: this.movimentForm.value.tipo,
+      };
+
+      this.movimentsService
+        .postMoviment(params)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response) => {
+            this.closeDialog(response);
+            this.message.success(`Moviment has been created`, {
+              nzDuration: 1000,
+            });
+          },
+          error: (error) => {
+            console.log(error);
+          },
+        });
+    } else {
+      const params = {
+        nome: this.movimentForm.value.nome,
+        categoriaId: this.movimentForm.value.categoriaId,
+        pago: this.movimentForm.value.pago,
+        data: this.movimentForm.value.data,
+        valor: this.movimentForm.value.valor,
+        tipo: this.movimentForm.value.tipo,
+        id: this.infoData.movementData.id,
+      };
+
+      this.movimentsService
+        .putMoviment(params)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response) => {
+            this.closeDialog(response);
+            this.message.success(`Moviment has been updated`, {
+              nzDuration: 1000,
+            });
+          },
+          error: (error) => {
+            console.log(error);
+          },
+        });
+    }
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

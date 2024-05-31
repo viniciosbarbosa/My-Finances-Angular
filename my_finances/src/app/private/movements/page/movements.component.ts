@@ -49,18 +49,19 @@ export class MovementsComponent implements OnInit, OnDestroy {
 
   callModalMoviment(actionName: string, movementData?: Moviment) {
     let dialogWidth = '60vw';
-    let dialogHeight = '80vh';
+    let dialogHeight = '82vh';
 
     if (window.innerWidth <= 500) {
       dialogWidth = '90vw';
-      dialogHeight = '80vh';
+      dialogHeight = '93vh';
     }
 
     const dialogRef = this.dialog.open(ModalNewEditComponent, {
       data: { actionName: actionName, movementData: movementData },
       width: dialogWidth,
+      maxWidth: '90vw',
       height: dialogHeight,
-      disableClose: false,
+      disableClose: true,
       enterAnimationDuration: '300ms',
       exitAnimationDuration: '300ms',
     });

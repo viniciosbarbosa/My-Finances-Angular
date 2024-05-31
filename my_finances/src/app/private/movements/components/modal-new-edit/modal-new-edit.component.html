@@ -3,7 +3,7 @@
     <span nz-icon nzType="close" nzTheme="outline"></span>
   </button>
 
-  <form [formGroup]="movimentForm" class="form-content">
+  <form [formGroup]="movimentForm" (ngSubmit)="saveInfo()" class="form-content">
     <h1>{{ title }} moviment</h1>
 
     <mat-form-field appearance="outline" class="mat-form-content">
@@ -23,6 +23,18 @@
           {{ category.nome }}
         </mat-option>
       </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="mat-form-content" appearance="outline">
+      <mat-label>Valor</mat-label>
+      <input
+        mask="separator.2"
+        thousandSeparator="."
+        matInput
+        type="text"
+        formControlName="valor"
+        prefix="R$"
+      />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="mat-form-content">
@@ -51,7 +63,7 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="mat-form-content">
-      <mat-label>Bill paycheck</mat-label>
+      <mat-label>Payday</mat-label>
       <input matInput [matDatepicker]="picker" formControlName="data" />
       <mat-hint>DD/MM/YYYY</mat-hint>
       <mat-datepicker-toggle
