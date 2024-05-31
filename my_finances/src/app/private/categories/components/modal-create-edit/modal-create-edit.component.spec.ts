@@ -8,11 +8,12 @@ import {
 import { ModalCreateEditComponent } from './modal-create-edit.component';
 import { CategoriesService } from '../../service/categories.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { takeUntil } from 'rxjs/operators';
 
 describe('ModalCreateEditComponent', () => {
   let component: ModalCreateEditComponent;
@@ -31,6 +32,7 @@ describe('ModalCreateEditComponent', () => {
     const categoriesServiceSpyObj = jasmine.createSpyObj('CategoriesService', [
       'postCategory',
       'putCategory',
+      'getCategoryById',
     ]);
     const messageServiceSpyObj = jasmine.createSpyObj('NzMessageService', [
       'success',
@@ -155,5 +157,27 @@ describe('ModalCreateEditComponent', () => {
 
     expect(component['destroy$'].next).toHaveBeenCalled();
     expect(component['destroy$'].complete).toHaveBeenCalled();
+  });
+
+  it('should call getCategoryById and update the form on success', () => {
+    const mockCategory = { nome: 'Category 1', descricao: 'Description 1' };
+    categoriesServiceSpy.getCategoryById.and.returnValue(of(mockCategory));
+    spyOn(component, 'updateCategoryForm');
+
+    component.getCategoryById('1');
+
+    expect(categoriesServiceSpy.getCategoryById).toHaveBeenCalledWith('1');
+    expect(component.updateCategoryForm).toHaveBeenCalledWith(mockCategory);
+  });
+
+  it('should handle error if getCategoryById fails', () => {
+    const error = { message: 'Error occurred' };
+    categoriesServiceSpy.getCategoryById.and.returnValue(throwError(error));
+    spyOn(console, 'log');
+
+    component.getCategoryById('1');
+
+    expect(categoriesServiceSpy.getCategoryById).toHaveBeenCalledWith('1');
+    expect(console.log).toHaveBeenCalledWith(error);
   });
 });
