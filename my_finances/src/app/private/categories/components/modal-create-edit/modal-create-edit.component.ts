@@ -23,7 +23,7 @@ export class ModalCreateEditComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private categoriesService: CategoriesService,
     public matDialogRef: MatDialogRef<ModalCreateEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: string,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private message: NzMessageService
   ) {}
 
