@@ -1,8 +1,9 @@
 import { CategoriesService } from './../service/categories.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Categories } from '../model/Categories';
-
+import { MatDialog } from '@angular/material/dialog';
+import { ModalCreateEditComponent } from '../components/modal-create-edit/modal-create-edit.component';
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
@@ -11,33 +12,77 @@ import { Categories } from '../model/Categories';
 export class CategoriesComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
 
-  constructor(private categoriesService: CategoriesService) {}
+  constructor(
+    private categoriesService: CategoriesService,
+    private dialog: MatDialog
+  ) {}
 
   tableCategoriesData!: Array<Categories>;
   total = 1;
   loading = true;
   pageSize = 5;
   pageIndex = 1;
+  message: string = '';
 
   ngOnInit(): void {
     this.getAllCategories();
   }
 
-  newCategory() {}
+  callModalCategory(action: string, id?: string): void {
+    let dialogWidth = '70vw';
+    let dialogHeight = '50vh';
+
+    if (window.innerWidth <= 500) {
+      dialogWidth = '80vw';
+      dialogHeight = '60vh';
+    }
+
+    const dialogRef = this.dialog.open(ModalCreateEditComponent, {
+      data: { actionName: action, idCategory: id },
+      width: dialogWidth,
+      height: dialogHeight,
+      disableClose: true,
+      enterAnimationDuration: '300ms',
+      exitAnimationDuration: '300ms',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== undefined && result !== null) {
+        this.getAllCategories();
+        this.message = result;
+      }
+    });
+  }
 
   getAllCategories(): void {
-    this.categoriesService.getCategories().subscribe({
-      next: (response) => {
-        this.loading = false;
-        this.tableCategoriesData = response;
-        console.log(this.tableCategoriesData);
-      },
-      error: (error) => {
-        this.loading = false;
+    this.categoriesService
+      .getCategories()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          this.loading = false;
+          this.tableCategoriesData = response;
+          console.log(this.tableCategoriesData);
+        },
+        error: (error) => {
+          this.loading = false;
 
-        console.log(error);
-      },
-    });
+          console.log(error);
+        },
+      });
+  }
+
+  deleteCategory(id: string): void {
+    this.categoriesService
+      .deleteCategory(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          this.getAllCategories();
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,12 @@
 <div class="container flex">
-  <button class="new-category" nz-button nzType="primary">Categoria +</button>
+  <button
+    class="new-category"
+    (click)="callModalCategory('Create')"
+    nz-button
+    nzType="primary"
+  >
+    + Category
+  </button>
   <br />
   <nz-table
     #categories
@@ -23,11 +30,18 @@
         <td class="tbl-data">{{ category.nome }}</td>
         <td class="tbl-data">{{ category.descricao }}</td>
         <td class="tbl-actions">
-          <button class="btn-actions">
+          <button
+            class="btn-actions"
+            (click)="callModalCategory('Edit', category.id)"
+          >
             <span nz-icon class="orange" nzType="edit" nzTheme="outline"></span>
           </button>
 
-          <button class="btn-actions">
+          <button
+            class="btn-actions"
+            *ngIf="category.id !== undefined"
+            (click)="deleteCategory(category.id)"
+          >
             <span nz-icon class="red" nzType="delete" nzTheme="outline"></span>
           </button>
         </td>

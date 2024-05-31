@@ -20,6 +20,7 @@ import { FormatBrazilianCurrencyPipe } from './pipe/format-brazilian-currency.pi
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [ToolbarComponent, FormatBrazilianCurrencyPipe],
@@ -43,6 +44,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzButtonModule,
     NzTableModule,
     NzIconModule,
+    MatDialogModule,
   ],
   exports: [
     MatCardModule,
@@ -63,6 +65,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzButtonModule,
     NzTableModule,
     NzIconModule,
+    MatDialogModule,
   ],
 })
 export class SharedModule {}

@@ -1,0 +1,48 @@
+.container {
+  width: 80%;
+  display: block;
+  margin: 0 auto;
+  margin-top: 30px;
+
+  .btn-close {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    position: absolute;
+    top: 1.5rem;
+    right: 3rem;
+
+    span {
+      font-size: 20px;
+      transition: 0.3s;
+      color: #3f50b5;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .form-content {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+
+    h1 {
+      font-family: sans-serif;
+    }
+
+    .mat-form-content {
+      width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    .btn-close {
+      top: 1rem;
+      right: 1rem;
+    }
+  }
+}
