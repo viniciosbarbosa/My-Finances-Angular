@@ -9,7 +9,15 @@ export class FormatBrazilianCurrencyPipe implements PipeTransform {
     locale: string = 'pt-BR',
     currency: string = 'BRL'
   ): any {
-    if (value == null || isNaN(value)) {
+    if (value == null) {
+      return null;
+    }
+
+    if (typeof value === 'string') {
+      value = parseFloat(value.replace(',', '.'));
+    }
+
+    if (isNaN(value)) {
       return null;
     }
 

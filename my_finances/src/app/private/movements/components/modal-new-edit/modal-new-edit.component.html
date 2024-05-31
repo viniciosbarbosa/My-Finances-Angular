@@ -1,0 +1,72 @@
+<div class="container">
+  <button class="btn-close" (click)="closeDialog()">
+    <span nz-icon nzType="close" nzTheme="outline"></span>
+  </button>
+
+  <form [formGroup]="movimentForm" class="form-content">
+    <h1>{{ title }} moviment</h1>
+
+    <mat-form-field appearance="outline" class="mat-form-content">
+      <mat-label>Name</mat-label>
+      <input
+        placeholder="Write a category"
+        matInput
+        type="text"
+        formControlName="nome"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="mat-form-content">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="categoriaId">
+        <mat-option *ngFor="let category of categories" [value]="category.id">
+          {{ category.nome }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="mat-form-content">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="pago">
+        <mat-option
+          *ngFor="let status of paycheckStatus"
+          [value]="status.value"
+        >
+          {{ status.descricao }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="mat-form-content">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="tipo">
+        <mat-option
+          style="text-transform: capitalize"
+          *ngFor="let typeMoviment of typeMoviments"
+          [value]="typeMoviment.value"
+        >
+          {{ typeMoviment.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="mat-form-content">
+      <mat-label>Bill paycheck</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="data" />
+      <mat-hint>DD/MM/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="movimentForm.invalid || !changeReported"
+    >
+      Save
+    </button>
+  </form>
+</div>

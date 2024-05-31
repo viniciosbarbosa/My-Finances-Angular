@@ -64,7 +64,6 @@ export class CategoriesComponent implements OnInit, OnDestroy {
         next: (response: Categories[]) => {
           this.loading = false;
           this.tableCategoriesData = response;
-          console.log(this.tableCategoriesData);
         },
         error: (error) => {
           this.loading = false;
