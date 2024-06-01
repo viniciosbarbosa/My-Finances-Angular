@@ -53,7 +53,7 @@ describe('AdminGuard', () => {
 
     guard.canActivate(null!, mockSnapshot).subscribe((result) => {
       expect(result).toBeFalse();
-      expect(router.navigateByUrl).toHaveBeenCalledWith('/login');
+      expect(router.navigateByUrl).toHaveBeenCalledWith('/extract');
       done();
     });
 

@@ -1,14 +1,19 @@
 <mat-toolbar color="primary" *ngIf="loginState">
-  <span>My Finances</span>
-  <span class="example-spacer"></span>
+  <div class="menu-content">
+    <span class="title">My Finances</span>
+    <span class="example-spacer"></span>
 
-  <div class="menu-item" *ngFor="let item of menuFilter">
-    <a routerLinkActive="router-link-active" [routerLink]="item.rota">{{
-      item.descricao
-    }}</a>
-  </div>
+    <div class="menu-item" *ngFor="let item of menuFilter">
+      <a
+        class="btn-router"
+        routerLinkActive="router-link-active"
+        [routerLink]="item.rota"
+        >{{ item.descricao }}</a
+      >
+    </div>
 
-  <div>
-    <button (click)="logout()">Sair</button>
+    <div class="btn-exit">
+      <button (click)="logout()">Exit</button>
+    </div>
   </div>
 </mat-toolbar>

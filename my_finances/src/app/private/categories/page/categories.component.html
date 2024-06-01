@@ -1,1 +1,51 @@
-<p>categories works!</p>
+<div class="container flex">
+  <button
+    class="new-category"
+    (click)="callModalCategory('Create')"
+    nz-button
+    nzType="primary"
+  >
+    + Category
+  </button>
+  <br />
+  <nz-table
+    #categories
+    [nzLoading]="loading"
+    [nzPageSize]="pageSize"
+    [nzPageIndex]="pageIndex"
+    [nzFrontPagination]="true"
+    [nzTotal]="total"
+    [nzData]="this.tableCategoriesData"
+  >
+    <thead>
+      <tr class="tbl-title">
+        <th nzColumnKey="name">Name</th>
+        <th nzColumnKey="description">Description</th>
+        <th nzColumnKey="action">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr class="tbl-row" *ngFor="let category of categories.data">
+        <td class="tbl-data">{{ category.nome }}</td>
+        <td class="tbl-data">{{ category.descricao }}</td>
+        <td class="tbl-actions">
+          <button
+            class="btn-actions"
+            (click)="callModalCategory('Edit', category.id)"
+          >
+            <span nz-icon class="orange" nzType="edit" nzTheme="outline"></span>
+          </button>
+
+          <button
+            class="btn-actions"
+            *ngIf="category.id !== undefined"
+            (click)="deleteCategory(category.id)"
+          >
+            <span nz-icon class="red" nzType="delete" nzTheme="outline"></span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
