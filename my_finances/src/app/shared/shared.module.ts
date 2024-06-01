@@ -12,10 +12,18 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+
+import { RouterModule } from '@angular/router';
+import { FormatBrazilianCurrencyPipe } from './pipe/format-brazilian-currency.pipe';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @NgModule({
-  declarations: [ToolbarComponent],
+  declarations: [ToolbarComponent, FormatBrazilianCurrencyPipe],
   imports: [
     CommonModule,
     MatCardModule,
@@ -31,6 +39,13 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
+    RouterModule,
+    MatSidenavModule,
+    NzButtonModule,
+    NzTableModule,
+    NzIconModule,
+
+    MatDialogModule,
   ],
   exports: [
     MatCardModule,
@@ -47,6 +62,12 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     ReactiveFormsModule,
     MatSnackBarModule,
     ToolbarComponent,
+    FormatBrazilianCurrencyPipe,
+    NzButtonModule,
+    NzTableModule,
+    NzIconModule,
+
+    MatDialogModule,
   ],
 })
 export class SharedModule {}

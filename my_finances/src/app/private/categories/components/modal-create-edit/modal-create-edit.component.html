@@ -1,0 +1,38 @@
+<div class="container">
+  <button class="btn-close" (click)="closeModal()">
+    <span nz-icon nzType="close" nzTheme="outline"></span>
+  </button>
+
+  <form [formGroup]="categoryForm" (ngSubmit)="saveInfo()" class="form-content">
+    <h1>{{ title }} category</h1>
+
+    <mat-form-field appearance="outline" class="mat-form-content">
+      <mat-label>Category</mat-label>
+      <input
+        placeholder="Write a category"
+        matInput
+        type="text"
+        formControlName="nome"
+      />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="mat-form-content">
+      <mat-label>Description</mat-label>
+      <input
+        placeholder="Write a description"
+        matInput
+        type="text"
+        formControlName="descricao"
+      />
+    </mat-form-field>
+
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [disabled]="categoryForm.invalid || !changeReported"
+    >
+      Save
+    </button>
+  </form>
+</div>

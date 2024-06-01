@@ -1,0 +1,144 @@
+.container {
+  padding: 1.5rem 3rem;
+  margin: 0 auto;
+  margin-top: 2rem;
+
+  .new-moviment {
+    float: right;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: #3f50b5;
+    border-radius: 10px;
+    border: none;
+    transition: 0.3s;
+
+    &:hover {
+      transform: scale(1.01);
+      background-color: rgb(255, 255, 255);
+      border: 1px solid #3f50b5;
+      color: #3f50b5;
+    }
+  }
+
+  .tbl-title {
+    th {
+      font-family: sans-serif;
+      text-align: center;
+      font-size: 1rem;
+      background: #3f50b5;
+      color: #fff;
+
+      &:first-child {
+        border-top-left-radius: 5px;
+      }
+
+      &:last-child {
+        border-top-right-radius: 5px;
+      }
+    }
+  }
+
+  .tbl-data {
+    width: 17%;
+    text-transform: capitalize;
+    text-align: center;
+  }
+
+  .tbl-actions {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .btn-actions {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  .green {
+    color: rgb(15, 165, 7);
+  }
+
+  .red {
+    color: rgb(253, 28, 7);
+  }
+
+  .orange {
+    color: rgb(255, 196, 0);
+  }
+
+  .anticon {
+    font-size: 20px;
+    transition: 0.3s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 1.5rem 1rem;
+
+    .tbl-title {
+      th {
+        font-size: 0.9rem;
+      }
+    }
+
+    .tbl-data {
+      width: 100%;
+      font-size: 0.9rem;
+    }
+
+    .new-moviment {
+      margin-bottom: 1rem;
+      width: 100%;
+      float: none;
+    }
+
+    .tbl-actions {
+      display: block;
+      text-align: center;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    padding: 1.5rem 0.5rem;
+
+    .tbl-title {
+      display: none; /* Hide table header */
+    }
+
+    .tbl-row {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #ddd;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+      background-color: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .tbl-data {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #ddd;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &::before {
+        content: attr(data-title);
+        font-weight: bold;
+      }
+    }
+
+    .tbl-actions {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+}

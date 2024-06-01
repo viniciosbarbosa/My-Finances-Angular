@@ -2,39 +2,120 @@
   flex: 1 1 auto;
 }
 
-.menu-item {
-  a {
-    color: #7b7b7b;
-    text-decoration: none;
-    margin: 10px;
-    transition: 0.3s;
-    &:hover {
-      color: #a7a7a7;
-      text-decoration: none;
-    }
+.menu-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: fixed;
 
-    &.active {
-      color: #070fb7;
+  .title {
+    margin-left: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .menu-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    .menu-item {
+      margin: 0.5rem;
+      white-space: nowrap;
+
+      a {
+        color: #fff;
+        text-decoration: none;
+        transition: 0.3s;
+
+        &:hover {
+          color: #a7a7a7;
+          text-decoration: none;
+        }
+
+        &.active {
+          color: #070fb7;
+        }
+      }
+    }
+  }
+
+  .btn-exit {
+    &:first-child {
+      margin-left: auto;
+      margin-right: 1rem;
     }
   }
 }
 
+@media screen and (max-width: 768px) {
+  .menu-content {
+    .title {
+      font-size: 1rem;
+    }
+
+    .menu-items {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .menu-content {
+    .title {
+      margin: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .btn-exit {
+      margin: 0.5rem;
+    }
+
+    .menu-items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      width: 100%;
+
+      .menu-item {
+        flex: 1 1 40%;
+        margin: 0.5rem;
+        text-align: center;
+
+        a {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+.btn-router {
+  color: #fff;
+  padding: 5px;
+  @media screen and (max-width: 500px) {
+    font-size: 1rem;
+  }
+}
+
 button {
-  background: rgb(245, 135, 135);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: rgb(255, 15, 15);
   color: white;
-  width: 50px;
-  height: 30px;
+  width: 4rem;
+  height: 35px;
   border: none;
   border-radius: 10px;
-  padding: 10px;
   transition: 0.3s;
   cursor: pointer;
+  margin-right: 2rem;
 
   &:hover {
     background: rgb(255, 12, 12);
     transform: scale(1.05);
+  }
+
+  @media screen and (max-width: 500px) {
+    padding: 0px;
+    width: 3.5rem;
   }
 }

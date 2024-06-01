@@ -1,0 +1,62 @@
+<div class="container flex">
+  <button
+    class="new-moviment"
+    (click)="callModalMoviment('New')"
+    nz-button
+    nzType="primary"
+  >
+    + Moviment
+  </button>
+
+  <nz-table
+    #moviments
+    [nzLoading]="loading"
+    [nzPageSize]="pageSize"
+    [nzPageIndex]="pageIndex"
+    [nzFrontPagination]="true"
+    [nzTotal]="total"
+    [nzData]="this.tableMovimentsData"
+  >
+    <thead>
+      <tr class="tbl-title">
+        <th nzColumnKey="name">Name</th>
+        <th nzColumnKey="type">Type</th>
+        <th nzColumnKey="status">Status</th>
+        <th nzColumnKey="value">Value</th>
+        <th nzColumnKey="data">Data</th>
+        <th nzColumnKey="action">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr class="tbl-row" *ngFor="let moviment of moviments.data">
+        <td class="tbl-data" data-title="Name">{{ moviment.nome }}</td>
+        <td class="tbl-data" data-title="Type">{{ moviment.tipo }}</td>
+        <td class="tbl-data" data-title="Status">
+          <span [ngClass]="moviment.pago ? 'green' : 'red'">{{
+            moviment.pago | statusPipe
+          }}</span>
+        </td>
+        <td class="tbl-data" data-title="Value">
+          {{ moviment.valor | formatBrazilianCurrency }}
+        </td>
+        <td class="tbl-data" data-title="Data">{{ moviment.data }}</td>
+        <td class="tbl-actions" data-title="Actions">
+          <button
+            class="btn-actions"
+            (click)="callModalMoviment('Edit', moviment)"
+          >
+            <span nz-icon class="orange" nzType="edit" nzTheme="outline"></span>
+          </button>
+          <button
+            class="btn-actions"
+            *ngIf="moviment.id !== undefined"
+            (click)="deleteCategory(moviment.id)"
+          >
+            <span nz-icon class="red" nzType="delete" nzTheme="outline"></span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
