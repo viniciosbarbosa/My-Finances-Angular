@@ -27,14 +27,7 @@
 
     <mat-form-field class="mat-form-content" appearance="outline">
       <mat-label>Valor</mat-label>
-      <input
-        mask="separator.2"
-        thousandSeparator="."
-        matInput
-        type="text"
-        formControlName="valor"
-        prefix="R$"
-      />
+      <input matInput type="text" formControlName="valor" />
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="mat-form-content">
@@ -74,6 +67,7 @@
     </mat-form-field>
 
     <button
+      type="submit"
       mat-raised-button
       color="primary"
       [disabled]="movimentForm.invalid || !changeReported"

@@ -1,3 +1,4 @@
+import { FormatBrazilianCurrencyPipe } from 'src/app/shared/pipe/format-brazilian-currency.pipe';
 import { Categories } from './../../../categories/model/Categories';
 import { CategoriesService } from './../../../categories/service/categories.service';
 import { MovimentsService } from './../../service/moviments.service';
@@ -7,6 +8,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject, takeUntil } from 'rxjs';
 import { Moviment } from '../../model/movement.model';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'app-modal-new-edit',
@@ -16,6 +18,7 @@ import { Moviment } from '../../model/movement.model';
 export class ModalNewEditComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
   movimentForm!: FormGroup;
+  oldMovimentForm!: FormGroup;
   changeReported: boolean = false;
   infoData: any;
   title: string = '';
@@ -34,7 +37,8 @@ export class ModalNewEditComponent implements OnInit, OnDestroy {
     private categoriesService: CategoriesService,
     public matDialogRef: MatDialogRef<ModalNewEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private formatBrazilianCurrencyPipe: FormatBrazilianCurrencyPipe
   ) {}
 
   ngOnInit(): void {
@@ -49,7 +53,10 @@ export class ModalNewEditComponent implements OnInit, OnDestroy {
       categoriaId: ['', Validators.required],
       pago: [true, Validators.required],
       data: [new Date(), Validators.required],
-      valor: ['', Validators.required],
+      valor: [
+        this.formatBrazilianCurrencyPipe.transform(0),
+        Validators.required,
+      ],
       tipo: ['despesa', Validators.required],
     });
 
@@ -59,19 +66,25 @@ export class ModalNewEditComponent implements OnInit, OnDestroy {
   }
 
   verifyFormChanges(): void {
+    // this.changeReported = Object.keys(this.movimentForm.controls).some(
+    //   (key) => this.movimentForm.get(key)?.dirty
+    // );
+
     this.changeReported = Object.keys(this.movimentForm.controls).some(
-      (key) => this.movimentForm.get(key)?.dirty
+      (key) => {
+        const dirty = this.movimentForm.get(key)?.dirty;
+        console.log(`Control ${key} dirty: ${dirty}`);
+        return dirty;
+      }
     );
+    console.log('changeReported:', this.changeReported);
   }
 
   getDataAndVerify(): void {
     this.infoData = this.data;
     this.title = this.infoData.actionName;
 
-    if (
-      this.infoData.movementData !== null &&
-      this.infoData.movementData !== undefined
-    ) {
+    if (this.infoData.movementData) {
       this.updateCategoryForm(this.infoData.movementData);
     }
   }
@@ -80,7 +93,6 @@ export class ModalNewEditComponent implements OnInit, OnDestroy {
     this.categoriesService.getCategories().subscribe({
       next: (data) => {
         this.categories = data;
-        console.log(this.categories);
       },
       error: (err) => {
         console.log(err);
@@ -95,9 +107,15 @@ export class ModalNewEditComponent implements OnInit, OnDestroy {
       nome: moviment.nome,
       categoriaId: moviment.categoriaId.toString(),
       pago: moviment.pago,
-      data: new Date(+dataFormatada[2], +dataFormatada[1], +dataFormatada[0]),
+      data: new Date(
+        +dataFormatada[2],
+        +dataFormatada[1] - 1,
+        +dataFormatada[0]
+      ),
       tipo: moviment.tipo,
-      valor: parseFloat(moviment.valor),
+      valor: this.formatBrazilianCurrencyPipe.transform(
+        parseFloat(moviment.valor)
+      ),
     });
   }
 
@@ -106,26 +124,34 @@ export class ModalNewEditComponent implements OnInit, OnDestroy {
   }
 
   saveInfo(): void {
-    if (
-      this.infoData.movementData !== null &&
-      this.infoData.movementData !== undefined
-    ) {
+    const dataFormata = dayjs(this.movimentForm.value.data).format(
+      'DD/MM/YYYY'
+    );
+
+    const valorFormatado = this.movimentForm.value.valor.slice(3);
+
+    console.log(this.movimentForm.value.valor);
+
+    console.log(valorFormatado);
+
+    if (this.infoData.movementData) {
       const params = {
         nome: this.movimentForm.value.nome,
         categoriaId: this.movimentForm.value.categoriaId,
         pago: this.movimentForm.value.pago,
-        data: this.movimentForm.value.data,
-        valor: this.movimentForm.value.valor,
+        data: dataFormata,
+        valor: valorFormatado,
         tipo: this.movimentForm.value.tipo,
+        id: this.infoData.movementData.id,
       };
 
       this.movimentsService
-        .postMoviment(params)
+        .putMoviment(params)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (response) => {
             this.closeDialog(response);
-            this.message.success(`Moviment has been created`, {
+            this.message.success(`Moviment has been updated`, {
               nzDuration: 1000,
             });
           },
@@ -138,19 +164,18 @@ export class ModalNewEditComponent implements OnInit, OnDestroy {
         nome: this.movimentForm.value.nome,
         categoriaId: this.movimentForm.value.categoriaId,
         pago: this.movimentForm.value.pago,
-        data: this.movimentForm.value.data,
-        valor: this.movimentForm.value.valor,
+        data: dataFormata,
+        valor: valorFormatado,
         tipo: this.movimentForm.value.tipo,
-        id: this.infoData.movementData.id,
       };
 
       this.movimentsService
-        .putMoviment(params)
+        .postMoviment(params)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (response) => {
             this.closeDialog(response);
-            this.message.success(`Moviment has been updated`, {
+            this.message.success(`Moviment has been created`, {
               nzDuration: 1000,
             });
           },
