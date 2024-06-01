@@ -66,18 +66,14 @@ export class ModalNewEditComponent implements OnInit, OnDestroy {
   }
 
   verifyFormChanges(): void {
-    // this.changeReported = Object.keys(this.movimentForm.controls).some(
-    //   (key) => this.movimentForm.get(key)?.dirty
-    // );
-
     this.changeReported = Object.keys(this.movimentForm.controls).some(
       (key) => {
         const dirty = this.movimentForm.get(key)?.dirty;
-        console.log(`Control ${key} dirty: ${dirty}`);
+        // console.log(`Control ${key} dirty: ${dirty}`);
         return dirty;
       }
     );
-    console.log('changeReported:', this.changeReported);
+    // console.log('changeReported:', this.changeReported);
   }
 
   getDataAndVerify(): void {
@@ -129,10 +125,6 @@ export class ModalNewEditComponent implements OnInit, OnDestroy {
     );
 
     const valorFormatado = this.movimentForm.value.valor.slice(3);
-
-    console.log(this.movimentForm.value.valor);
-
-    console.log(valorFormatado);
 
     if (this.infoData.movementData) {
       const params = {

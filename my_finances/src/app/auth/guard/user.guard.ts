@@ -30,7 +30,6 @@ export class UserGuard implements CanActivate {
           return false;
         } else {
           this.router.navigate(['/login']);
-          alert('erro');
 
           return false;
         }
